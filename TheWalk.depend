@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1556298018 source:c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\main.cpp
+	<iostream>
+	<graphics.h>
+	"Map.h"
+	"Game.h"
+
+1556298136 source:c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\src\map.cpp
+	"Map.h"
+	<graphics.h>
+	<stdlib.h>
+	<time.h>
+	<vector>
+	<iostream>
+
+1556298437 c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\include\map.h
+	<vector>
+
+1556297951 source:c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\src\game.cpp
+	"Game.h"
+	<vector>
+
+1556297943 c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\include\game.h
+	"Map.h"
+	"Robot.h"
+	<vector>
+
+1556208209 source:c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\src\robot.cpp
+	"Robot.h"
+
+1556284084 c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\include\robot.h
+	<iostream>
+
