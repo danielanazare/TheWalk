@@ -7,10 +7,16 @@
 #define HEADER_X 30
 #define HEADER_Y 30
 #define SQUARE 40
+#define OBSTACLE -1
+#define EMPTY_SPACE 0
+#define ITEM1 1
+#define ITEM2 2
+#define ITEM3 3
+#define ROBOT 4
+#define FINAL 5
 
 ///constuctor cu sau fara parametri - construieste harta
 Map::Map(int h = 15, int w = 15)
-
 {
     height = h;
     width = w;
@@ -29,16 +35,17 @@ Map::Map(int h = 15, int w = 15)
             Table[i][j].taken = 0;
         }
     }
+
     ///Set Robot start position
     pozX = 0;
     pozY = 0;
-    Table[pozX][pozY].value = 4;
+    Table[pozX][pozY].value = ROBOT;
 
-    ///Set final pozition, different from start
+    ///Set final position, different from start
     srand(time(NULL));
     finalpozX = rand() % (height - 1) + 1;
     finalpozY = rand() % (width - 1) + 1;
-    Table[finalpozX][finalpozY].value = 5; /// 5 = final
+    Table[finalpozX][finalpozY].value = FINAL;
 
     ///Place items and obstacles
     int itemno = width * height /16;
@@ -65,7 +72,7 @@ Map::Map(int h = 15, int w = 15)
         y = rand() % width;
         if(Table[x][y].value == 0)
         {
-            Table[x][y].value = -1;
+            Table[x][y].value = OBSTACLE;
             k++;
         }
     }
@@ -85,20 +92,18 @@ void Map::print(int c, std::vector<int> path)
             setcolor(15);
             rectangle(Table[i][j].x, Table[i][j].y, Table[i][j].x + SQUARE, Table[i][j].y + SQUARE);
 
-            if(Table[i][j].value == -1)
+            if(Table[i][j].value == OBSTACLE)
                 setfillstyle(1, 4);
-            else if(Table[i][j].value == 1)
-                setfillstyle(1, 1);
-            else if(Table[i][j].value == 2)
-                setfillstyle(1, 2);
-            else if(Table[i][j].value == 3)
-                setfillstyle(1, 3);
-            else if(Table[i][j].value == 4)
-                {setfillstyle(1, c);///Robo->getcolor()
-                //setcolor(3);
+            else if(Table[i][j].value == ITEM1)
+                setfillstyle(1, ITEM1);
+            else if(Table[i][j].value == ITEM2)
+                setfillstyle(1, ITEM2);
+            else if(Table[i][j].value == ITEM3)
+                setfillstyle(1, ITEM3);
+            else if(Table[i][j].value == ROBOT) {
+                setfillstyle(1, c);
                 circle(Table[i][j].x + SQUARE/2, Table[i][j].y + SQUARE/2, SQUARE/2);
-                }
-            else if(Table[i][j].value == 5)
+            } else if(Table[i][j].value == FINAL)
                 setfillstyle(1, 7);
             else
                 setfillstyle(1, 0);
@@ -106,8 +111,6 @@ void Map::print(int c, std::vector<int> path)
             floodfill(Table[i][j].x + SQUARE/2, Table[i][j].y + SQUARE/2, 15);
 
         }
-    ///getch();
-    //closegraph();
     delay(100);
 
     ///Afisam traseul generat
@@ -127,7 +130,6 @@ void Map::print(int c, std::vector<int> path)
         floodfill(Table[x][y].x + SQUARE/2, Table[x][y].y + SQUARE/2 ,15);
 
         delay(1000);
-
     }
 
     setbkcolor(0);
@@ -135,11 +137,8 @@ void Map::print(int c, std::vector<int> path)
     settextstyle(5, 0, 5);
     outtext("End of game\n");
 
-   /// delay(1000);
-   getch();
-   closegraph();
-
-
+    getch();
+    closegraph();
 }
 
 Map::~Map()
@@ -152,18 +151,15 @@ Map::~Map()
 
 bool Map::valid(int x, int y)
 {
-    if((x >= 0) && (x < height) && (y >=0) && (y < width) && (Table[x][y].taken == 0) && (Table[x][y].value != -1))
-        return true;
-    else
-        return false;
-  ///  return (x >= 0) && (x < height) && (y >=0) && (y < width) && (Table[x][y].taken == 0) && (Table[x][y].value != 4);
+    return (x >= 0) && (x < height) && (y >=0) && (y < width) && (Table[x][y].taken == 0) && (Table[x][y].value != -1);
 }
+
 std::vector<int> Map::walk(int c)
 {
     int row[] = {-1, 0, 1, 0};
     int col[] = {0, 1, 0, -1};
 
-    std::vector<int> X, Y, I, A, P; ///X= linia, Y = coloana, I = index, A = anterior, P = points(nr of items colected)
+    std::vector<int> X, Y, I, A, P; ///X= linia, Y = coloana, I = index, A = anterior, P = points(no of items colected)
     X.push_back(pozX);
     Y.push_back(pozY);
     I.push_back(0);
@@ -183,6 +179,7 @@ std::vector<int> Map::walk(int c)
         {
             xx = x + row[i];
             yy = y + col[i];
+
             if(valid(xx, yy) == true)
             {
                 k++;

@@ -6,16 +6,13 @@
 
 class Game
 {
-
-    Map *harta;
+    Map *gameMap;
     Robot *Robo;
 
 public:
     Game(int, int, int);
     //void print();
     void walk();
-
-
 };
 
 #endif // GAME_H
