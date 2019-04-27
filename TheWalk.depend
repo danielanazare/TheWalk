@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1556298018 source:c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\main.cpp
+1556388526 source:c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\main.cpp
 	<iostream>
 	<graphics.h>
 	"Map.h"
 	"Game.h"
 
-1556298136 source:c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\src\map.cpp
+1556302800 source:c:\users\donut\desktop\fmi\i-sem2\poo\thewalk\src\map.cpp
 	"Map.h"
 	<graphics.h>
 	<stdlib.h>
